@@ -1,4 +1,6 @@
-### TLDJ-DEV-UTILS
+### DEV-UTILS
 
-**this is dev utilities for developing tldj**
+**this is dev utilities for develop **
 **this has local setting scripts**
+
+** setup aws config.. docker.. etc (todo)**
