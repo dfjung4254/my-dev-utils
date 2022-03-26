@@ -1,0 +1,9 @@
+{
+  "name": "tldj-dev-utils",
+  "version": "1.0.0",
+  "description": "tldj-dev-utils",
+  "main": "index.js",
+  "type": "module",
+  "author": "devjk",
+  "license": "MIT"
+}
