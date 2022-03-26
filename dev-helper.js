@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-import {exec, spawn} from 'child_process';
-import ScriptInfo from './scriptInfo.js';
+import {exec, execFile, spawn} from 'child_process';
+import ScriptInfo from './core/scriptInfo.js';
 import readline from 'readline';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import write from './core/write.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,8 +42,8 @@ function processCommand() {
   rl.on('line', line => {
 
     if(line && line >= 0 && line < scriptList.length) {
-      execScript(scriptList[line]);
       rl.close();
+      execScript(scriptList[line]);
       return;
     }
 
@@ -55,27 +56,17 @@ function processCommand() {
 
 function execScript(script) {
 
+  console.log('\r');
+
   const command = path.join(__dirname, script['path']);
-  const scriptProcess = spawn(command);
+  const child = spawn(command, [], {stdio: 'inherit'});
 
-  scriptProcess.stdout.on('data', data => {
-    console.log(`${data}`);
-  });
-
-  scriptProcess.stderr.on('data', data => {
-    console.log(`${data}`);
-  });
-
-  scriptProcess.on('exit', code => {
+  child.on('exit', code => {
     console.log(`${script.name} exited with code ;  ${code}`);
   });
 
 }
 
-
-function write(content) {
-  process.stdout.write(content);
-}
 
 init();
 
