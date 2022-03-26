@@ -59,11 +59,11 @@ function execScript(script) {
   const scriptProcess = spawn(command);
 
   scriptProcess.stdout.on('data', data => {
-    console.log(`${script.name} > ${data}`);
+    console.log(`${data}`);
   });
 
   scriptProcess.stderr.on('data', data => {
-    console.log(`${script.name} > ${data}`);
+    console.log(`${data}`);
   });
 
   scriptProcess.on('exit', code => {
