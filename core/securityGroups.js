@@ -7,7 +7,7 @@ class SecurityGroup {
 
 export default [
   new SecurityGroup('tldj-rds', 'sg-0de0015ddb203348c'),
-  new SecurityGroup('tldj-api, tetrix', 'sg-09a8956dd016ed97b')
+  new SecurityGroup('clubtetrix', 'sg-03c81c22d5e32edf5')
 ];
 
 
