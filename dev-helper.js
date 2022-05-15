@@ -11,7 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const scriptList = [
   new ScriptInfo('AWS 현재 IP Ingress 허용', 'scripts/aws-ingress.js'),
-  new ScriptInfo('AWS 현재 허용중인 Ip 목록', 'scripts/aws-ingress-ip-list.js')
+  new ScriptInfo('AWS 현재 허용중인 Ip 목록', 'scripts/aws-ingress-ip-list.js'),
+  new ScriptInfo('현재 IP 확인', 'scripts/ip-controller.js')
 ];
 
 
