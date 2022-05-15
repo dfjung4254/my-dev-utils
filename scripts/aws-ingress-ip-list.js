@@ -9,7 +9,7 @@ import {exec} from 'child_process';
 import readline from 'readline';
 import SecurityGroups from '../core/securityGroups.js';
 import write from '../core/write.js';
-
+import { getCurrentIp } from '../core/ip.js';
 
 async function init() {
 
@@ -57,13 +57,15 @@ async function processIngressCommand(commandIndex) {
   
   console.log('GroupName : ', securityGroup['GroupName']);
   console.log('Ip Permissions');
-  console.log(formatIpIngress(securityGroup['IpPermissions']));
+  console.log(await formatIpIngress(securityGroup['IpPermissions']));
   // console.log(JSON.stringify(securityGroup['IpPermissions'], null, 4));
 
 }
 
 
-function formatIpIngress(ipPermissions) {
+async function formatIpIngress(ipPermissions) {
+
+  const currentIp = await getCurrentIp(true);
   
   const formattedIpPermissions = [];
   ipPermissions.forEach(ipPermission => {
@@ -73,11 +75,25 @@ function formatIpIngress(ipPermissions) {
       const cidrIp = ipRange['CidrIp'].split('/');
       const ip = cidrIp[0];
       const cidr = cidrIp[1];
-      formattedIpPermissions.push('[' + ip + ']' + getSpace(ip, 20) + '[' + cidr + ']' + getSpace(cidr, 5) + '[' + port + ']' + getSpace(String(port), 10) + '[' + protocol + ']');
+      const coloredIp = getColoredIp(ip, currentIp);
+      formattedIpPermissions.push('[' + coloredIp + ']' + getSpace(ip, 20) + '[' + cidr + ']' + getSpace(cidr, 5) + '[' + port + ']' + getSpace(String(port), 10) + '[' + protocol + ']');
     });
   });
 
   return formattedIpPermissions.join('\n');
+}
+
+function getColoredIp(ip, currentIp) {
+
+  if(ip === currentIp) {
+    return '\x1b[32m' + ip + '\x1b[0m';
+  }
+
+  if(ip === '0.0.0.0') {
+    return '\x1b[34m' + ip + '\x1b[0m';
+  }
+
+  return ip;
 }
 
 

@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
-import ProcessUtils from '../core/process.js';
+import { getCurrentIp } from '../core/ip.js';
 
-async function init() {
+function init() {
 
-  const processUtils = new ProcessUtils();
-  const result = await processUtils.execResult('curl', ['http://ip-api.com/json']);
-  const ipInfo = JSON.parse(result);
-  console.log(`current ip : \x1b[32m [${ipInfo['query']}] \x1b[0m`);
-  console.log(`current ip details : `, ipInfo);
+  getCurrentIp(noStdout());
 
 }
 
+function noStdout() {
+  return process.argv.some(arg => arg === '-no-stdout');
+}
+
 init();
+
